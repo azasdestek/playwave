@@ -1,6 +1,219 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Playwave — Music Player</title>
-<style>body{margin:0;background:#0D0A14;color:#FFF7FB;font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}main{max-width:640px;margin:0 auto;padding:64px 20px}h1{font-size:40px;margin:0;background:linear-gradient(90deg,#FF4D6D,#E0218A,#7B3FF2);-webkit-background-clip:text;background-clip:text;color:transparent}p{color:rgba(255,247,251,.75)}a{color:#FF8FB1}.links{display:flex;flex-direction:column;gap:10px;margin:28px 0}.links a{display:block;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);text-decoration:none;font-weight:600}.links a:hover{background:rgba(255,61,127,.14)}.back{font-size:14px}</style></head>
-<body><main><h1>Playwave</h1><p>Music player with equalizer, music alarm, sleep timer and ringtone cutter.<br>Ekolayzer, müzikli alarm, uyku zamanlayıcısı ve zil sesi kesicili müzik çalar.</p>
-<div class="links"><a href="privacy.html">Gizlilik Politikası / Privacy Policy →</a><a href="terms.html">Kullanım Şartları / Terms of Use →</a></div>
-<p>Contact / İletişim: <a href="mailto:azas.destek@gmail.com">azas.destek@gmail.com</a></p>
-<p class="back"><a href="https://azasdestek.github.io/">← Azas Lab.</a></p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Playwave — Music Player</title>
+<meta name="description" content="Playwave: offline music player with Android Auto, synced lyrics, equalizer, Mix transitions, music alarm and ringtone cutter.">
+<meta property="og:title" content="Playwave — Music Player">
+<meta property="og:description" content="Offline music player with Android Auto, synced lyrics, equalizer and Mix transitions.">
+<meta property="og:image" content="https://azasdestek.github.io/playwave/img/en_1.webp">
+<meta name="theme-color" content="#0D0A14">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0D0A14;--ink2:#151020;--card:rgba(255,255,255,.05);--line:rgba(255,255,255,.09);--text:#FFF7FB;--muted:rgba(255,247,251,.68);--pink:#FF3D7F;--mag:#E0218A;--violet:#7B3FF2;--grad:linear-gradient(100deg,#FF4D6D,#E0218A 45%,#7B3FF2)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--text);font:16px/1.6 Poppins,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow-x:hidden}
+a{color:#FF8FB1}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
+/* nav */
+nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:rgba(13,10,20,.72);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:12px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--text);text-decoration:none}
+.brand img{width:34px;height:34px;border-radius:9px}
+.spacer{flex:1}
+.navlinks a{color:var(--muted);text-decoration:none;font-size:14px;margin-left:18px}
+.navlinks a:hover{color:var(--text)}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;margin-left:16px}
+.lang button{all:unset;cursor:pointer;font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px;color:var(--muted)}
+.lang button.on{background:var(--grad);color:#fff}
+/* hero */
+.hero{position:relative;padding:72px 0 40px}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#FFB3CB;background:rgba(255,61,127,.12);border:1px solid rgba(255,61,127,.3);padding:6px 14px;border-radius:999px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--pink);box-shadow:0 0 10px var(--pink)}
+h1{font-size:clamp(40px,6vw,68px);line-height:1.05;margin:18px 0 16px;font-weight:800;letter-spacing:-.02em}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:18px;color:var(--muted);max-width:520px;margin:0 0 26px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px}
+.chip{font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+.chip:first-child{background:var(--grad);border-color:transparent}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.play{display:inline-flex;align-items:center;gap:12px;padding:10px 20px 10px 16px;border-radius:14px;background:#000;border:1px solid rgba(255,255,255,.25);color:#fff;text-decoration:none}
+.play svg{width:26px;height:26px}
+.play small{display:block;font-size:11px;color:#bbb;line-height:1.2}
+.play b{display:block;font-size:17px;line-height:1.2}
+.ghost{padding:13px 20px;border-radius:14px;border:1px solid var(--line);color:var(--text);text-decoration:none;font-weight:600;font-size:15px}
+.ghost:hover{background:var(--card)}
+.phones{position:relative;height:560px}
+.phone{position:absolute;width:230px;border-radius:38px;padding:9px;background:#1C1824;box-shadow:0 30px 80px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.1)}
+.phone img{display:block;width:100%;border-radius:30px}
+.phone.a{left:50%;top:0;transform:translateX(-50%);z-index:2;width:260px}
+.phone.b{left:0;top:60px;transform:rotate(-8deg);filter:brightness(.7)}
+.phone.c{right:0;top:60px;transform:rotate(8deg);filter:brightness(.7)}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px auto 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;text-align:center}
+.stat b{display:block;font-size:34px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
+.stat span{font-size:14px;color:var(--muted)}
+/* sections */
+section{position:relative;padding:80px 0 20px}
+h2{font-size:clamp(28px,4vw,40px);margin:0 0 10px;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 34px;max-width:620px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:22px;padding:22px;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,61,127,.45)}
+.ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:rgba(255,61,127,.14);margin-bottom:14px}
+.ic svg{width:24px;height:24px;stroke:#FF6E9C;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:17px;margin:0 0 6px}
+.card p{font-size:14px;color:var(--muted);margin:0}
+.new{font-size:10px;font-weight:700;letter-spacing:.06em;color:#fff;background:var(--violet);padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:2px}
+/* gallery */
+.gallery{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 24px;margin:0 -20px;scrollbar-width:thin;scrollbar-color:#3a2d4d transparent}
+.gallery img{flex:0 0 auto;width:230px;border-radius:22px;scroll-snap-align:center;box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px var(--line)}
+/* privacy */
+.promise{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;background:linear-gradient(120deg,rgba(255,61,127,.14),rgba(123,63,242,.14));border:1px solid rgba(255,61,127,.25);border-radius:28px;padding:34px}
+.shield{width:76px;height:76px;border-radius:22px;background:var(--grad);display:grid;place-items:center}
+.shield svg{width:38px;height:38px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.promise h2{font-size:28px}
+.promise ul{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--muted);font-size:15px}
+.promise li::before{content:"✓ ";color:#FF6E9C;font-weight:700}
+/* footer */
+footer{margin-top:80px;border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+footer a{color:var(--text);text-decoration:none}
+footer a:hover{color:#FF8FB1}
+html[lang=en] [data-l=tr],html[lang=tr] [data-l=en]{display:none!important}
+@media (max-width:900px){
+ .hero .wrap{grid-template-columns:1fr}
+ .phones{height:470px;max-width:420px;margin:0 auto;width:100%}
+ .phone{width:190px}.phone.a{width:220px}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .navlinks{display:none}
+}
+@media (max-width:520px){
+ .hero{padding-top:44px}
+ .grid{grid-template-columns:1fr}
+ .phone.b,.phone.c{width:150px;top:80px}
+ .phone.a{width:200px}
+ .promise{grid-template-columns:1fr;padding:26px}
+ .gallery img{width:200px}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+ <a class="brand" href="#"><img src="img/icon.png" alt="">Playwave</a>
+ <div class="spacer"></div>
+ <div class="navlinks">
+  <a href="#features"><span data-l="en">Features</span><span data-l="tr">Özellikler</span></a>
+  <a href="#screens"><span data-l="en">Screenshots</span><span data-l="tr">Ekranlar</span></a>
+  <a href="privacy.html"><span data-l="en">Privacy</span><span data-l="tr">Gizlilik</span></a>
+ </div>
+ <div class="lang"><button data-set="en">EN</button><button data-set="tr">TR</button></div>
+</div></nav>
+
+<header class="hero">
+ <div class="glow" style="width:520px;height:520px;background:rgba(224,33,138,.35);left:-160px;top:40px"></div>
+ <div class="glow" style="width:560px;height:560px;background:rgba(123,63,242,.35);right:-180px;top:-120px"></div>
+ <div class="wrap">
+  <div>
+   <span class="eyebrow"><i></i><span data-l="en">New in 2.5 · Android Auto &amp; synced lyrics</span><span data-l="tr">2.5'te yeni · Android Auto ve senkron sözler</span></span>
+   <h1><span data-l="en">Your music,<br><span class="g">in vivid color</span></span><span data-l="tr">Müziğin,<br><span class="g">canlı renklerle</span></span></h1>
+   <p class="lead"><span data-l="en">A colorful, simple player for the music on your phone. Works offline, no account needed — just open and listen.</span><span data-l="tr">Telefonundaki müzikler için renkli ve sade bir çalar. İnternet ve hesap gerekmez: aç ve dinle.</span></p>
+   <div class="chips">
+    <span class="chip"><span data-l="en">Offline</span><span data-l="tr">Çevrimdışı</span></span>
+    <span class="chip">Android Auto</span>
+    <span class="chip"><span data-l="en">Synced lyrics</span><span data-l="tr">Senkron sözler</span></span>
+    <span class="chip"><span data-l="en">Mix transitions</span><span data-l="tr">Mix geçiş</span></span>
+   </div>
+   <div class="cta">
+    <span class="play" title="Google Play">
+     <svg viewBox="0 0 24 24"><path fill="#00D7FE" d="M3.6 1.8 13.4 12 3.6 22.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-1 .6-1.2z"/><path fill="#FFCE00" d="m16.8 8.6-3.4 3.4 3.4 3.4 3.8-2.2c1-.6 1-1.8 0-2.4z"/><path fill="#00F076" d="M3.6 1.8c.3-.2.8-.2 1.3 0l11.9 6.8-3.4 3.4z"/><path fill="#FF3A44" d="m13.4 12 3.4 3.4-11.9 6.8c-.5.3-1 .2-1.3 0z"/></svg>
+     <span><small><span data-l="en">Coming soon to</span><span data-l="tr">Yakında</span></small><b>Google Play</b></span>
+    </span>
+    <a class="ghost" href="#features"><span data-l="en">See features ↓</span><span data-l="tr">Özellikleri gör ↓</span></a>
+   </div>
+  </div>
+  <div class="phones">
+   <div class="phone b"><img data-hero="2" alt=""></div>
+   <div class="phone c"><img data-hero="3" alt=""></div>
+   <div class="phone a"><img data-hero="1" alt="Playwave"></div>
+  </div>
+ </div>
+ <div class="wrap" style="position:relative;z-index:1;display:block">
+  <div class="stats">
+   <div class="stat"><b>20</b><span data-l="en">animated visualizers</span><span data-l="tr">hareketli görselleştirici</span></div>
+   <div class="stat"><b>13</b><span data-l="en">color themes</span><span data-l="tr">renk teması</span></div>
+   <div class="stat"><b>16</b><span data-l="en">languages</span><span data-l="tr">dil</span></div>
+   <div class="stat"><b>0</b><span data-l="en">accounts needed</span><span data-l="tr">hesap gerekmez</span></div>
+  </div>
+ </div>
+</header>
+
+<section id="features"><div class="wrap">
+ <h2><span data-l="en">Everything your music needs</span><span data-l="tr">Müziğin için gereken her şey</span></h2>
+ <p class="sub"><span data-l="en">Built for the songs you already have — fast, private and beautiful.</span><span data-l="tr">Zaten sahip olduğun şarkılar için: hızlı, gizli ve göz alıcı.</span></p>
+ <div class="grid">
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M6 18v2M18 18v2M7 10h4"/><circle cx="16" cy="12" r="2"/></svg></div><h3>Android Auto<span class="new">NEW</span></h3><p data-l="en">Recently played, playlists, albums and artists in your car, with voice search.</p><p data-l="tr">Son çalınanlar, listeler, albümler ve sanatçılar arabada, sesli aramayla.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h10M4 14h16M4 18h8"/></svg></div><h3><span data-l="en">Synced lyrics</span><span data-l="tr">Senkron sözler</span><span class="new">NEW</span></h3><p data-l="en">From .lrc files or embedded tags. Tap a line to jump there.</p><p data-l="tr">.lrc dosyalarından ya da şarkıya gömülü sözlerden. Satıra dokun, oraya atla.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v3M11 11v7M15 7v11M19 13v5"/></svg></div><h3><span data-l="en">Your summary</span><span data-l="tr">Müzik özetin</span><span class="new">NEW</span></h3><p data-l="en">Day-by-day history with search and stars, plus monthly and yearly top lists.</p><p data-l="tr">Gün gün geçmiş, arama ve yıldız; aylık ve yıllık en çok dinlediklerin.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M2 12c3-6 5-6 8 0s5 6 8 0"/><path d="M14 12c1.5-3 3-4.5 4.5-4.5S21 9 22 12" opacity=".6"/></svg></div><h3><span data-l="en">Mix transitions</span><span data-l="tr">Mix geçiş</span><span class="new">NEW</span></h3><p data-l="en">DJ-style crossfade or a soft fade between songs. Albums stay gapless.</p><p data-l="tr">DJ tarzı karışım ya da yumuşak geçiş. Albümler kesintisiz kalır.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg></div><h3><span data-l="en">Equalizer</span><span data-l="tr">Ekolayzer</span></h3><p data-l="en">Presets, 5 bands, bass boost and 3D virtualizer.</p><p data-l="tr">Hazır ayarlar, 5 bant, bas güçlendirici ve 3D sanallaştırıcı.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M5 3 2 6M22 6l-3-3"/></svg></div><h3><span data-l="en">Music alarm</span><span data-l="tr">Müzikli alarm</span></h3><p data-l="en">Wake up to the song you last listened to, with a gentle volume rise.</p><p data-l="tr">Son dinlediğin şarkıyla uyan, ses yavaşça artsın.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg></div><h3><span data-l="en">Ringtone cutter</span><span data-l="tr">Zil sesi kesici</span></h3><p data-l="en">Cut, preview and set any song as ringtone, notification or alarm.</p><p data-l="tr">Kes, dinle; zil, bildirim ya da alarm sesi yap.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2a10 10 0 0 0 0 20c1 0 1.5-.8 1.5-1.5 0-.4-.2-.7-.4-1-.3-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16a6 6 0 0 0 6-6c0-5-4.5-9-10-9z"/></svg></div><h3><span data-l="en">13 themes, 20 effects</span><span data-l="tr">13 tema, 20 efekt</span></h3><p data-l="en">Colors that follow the album cover and visualizers that move with the music.</p><p data-l="tr">Kapağa uyan renkler ve müzikle hareket eden görselleştiriciler.</p></div>
+ </div>
+</div></section>
+
+<section id="screens"><div class="wrap">
+ <h2><span data-l="en">Take a look</span><span data-l="tr">Yakından bak</span></h2>
+ <p class="sub"><span data-l="en">Swipe through the app.</span><span data-l="tr">Uygulamayı kaydırarak gez.</span></p>
+ <div class="gallery" id="gallery"></div>
+</div></section>
+
+<section><div class="wrap">
+ <div class="promise">
+  <div class="shield"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+  <div>
+   <h2><span data-l="en">Your music stays on your phone</span><span data-l="tr">Müziğin telefonunda kalır</span></h2>
+   <div data-l="en"><ul><li>No account</li><li>Works offline</li><li>History and stats computed on device</li><li>One-time ad-free purchase</li></ul></div>
+   <div data-l="tr"><ul><li>Hesap yok</li><li>İnternetsiz çalışır</li><li>Geçmiş ve özet telefonda hesaplanır</li><li>Tek seferlik reklamsız sürüm</li></ul></div>
+  </div>
+ </div>
+</div></section>
+
+<footer><div class="wrap">
+ <a class="brand" href="https://azasdestek.github.io/" style="font-size:15px"><img src="img/icon.png" alt="" style="width:26px;height:26px;border-radius:7px">Azas Lab</a>
+ <div class="spacer"></div>
+ <a href="privacy.html"><span data-l="en">Privacy Policy</span><span data-l="tr">Gizlilik Politikası</span></a>
+ <a href="terms.html"><span data-l="en">Terms of Use</span><span data-l="tr">Kullanım Şartları</span></a>
+ <a href="mailto:azas.destek@gmail.com">azas.destek@gmail.com</a>
+</div></footer>
+
+<script>
+(function(){
+  var gal=document.getElementById('gallery');
+  for(var i=1;i<=8;i++){var im=document.createElement('img');im.setAttribute('data-src',i);im.loading='lazy';im.alt='';gal.appendChild(im);}
+  function setLang(l){
+    document.documentElement.lang=l;
+    document.querySelectorAll('img[data-src]').forEach(function(im){im.src='img/'+l+'_'+im.getAttribute('data-src')+'.webp';});
+    document.querySelectorAll('img[data-hero]').forEach(function(im){im.src='img/h_'+l+'_'+im.getAttribute('data-hero')+'.webp';});
+    document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-set')===l);});
+    try{localStorage.setItem('pw_lang',l);}catch(e){}
+  }
+  var saved=null;try{saved=localStorage.getItem('pw_lang');}catch(e){}
+  var l=saved||((navigator.language||'en').toLowerCase().indexOf('tr')===0?'tr':'en');
+  document.querySelectorAll('.lang button').forEach(function(b){b.onclick=function(){setLang(b.getAttribute('data-set'));};});
+  setLang(l);
+})();
+</script>
+</body>
+</html>
